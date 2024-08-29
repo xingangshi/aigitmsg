@@ -18,12 +18,24 @@ unalias gcm 2>/dev/null
 gcm() {
     # Function to generate commit message using the gemini model
     generate_commit_message() {
-        git diff --cached | llm -m gemini-1.5-flash-latest "
-Below is a diff of all staged changes, coming from the command:
+        llm -m gemini-1.5-flash-latest "
+You need to generate a git commit message based on the following rules:
+1. Good git messages examples
+- feat: Add type annotation to generate_commit_message function
+- fix: Fix bug in generate_commit_message function
+- docs: Update README.md
+- feat: first commit
+- style: Format code using black
+- refactor: Refactor generate_commit_message function
+- ci: Add GitHub Actions workflow for Python package release
+- build: Update setup.py and add tests folder
+
+2. the commit message should  based on the diff content is following:
+\n
 \`\`\`
-git diff --cached
+`git diff --cached --staged`
 \`\`\`
-Please generate a concise, one-line commit message for these changes."
+"
     }
 
     # Function to read user input compatibly with both Bash and Zsh
@@ -38,10 +50,11 @@ Please generate a concise, one-line commit message for these changes."
 
     # Main script
     echo "Generating AI-powered commit message using gemini..."
+    echo -e "\nAI Commit message is Base on the diff contents:\n\n`git diff --cached --staged`\n\n"
     commit_message=$(generate_commit_message)
 
     while true; do
-        echo -e "\nProposed commit message:"
+        echo -e "\nProposed commit message:\n"
         echo "$commit_message"
 
         read_input "Do you want to (a)ccept, (e)dit, (r)egenerate, or (c)ancel? "
@@ -70,6 +83,7 @@ Please generate a concise, one-line commit message for these changes."
                 ;;
             r|R )
                 echo "Regenerating commit message using gemini..."
+                echo -e "\nThe commit message is Base on the diff contents:\n\n`git diff --cached --staged`\n\n"
                 commit_message=$(generate_commit_message)
                 ;;
             c|C )
