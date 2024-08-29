@@ -1,11 +1,11 @@
-# aigitmsg
+# AI Generate Git message
 Auto generate git commit message by Google Gemini AI.
 
 ## 1. Base Installer
 
 ### 1.1 Generate your Gemini key
 
-Open [google ai gemini](https://aistudio.google.com/app/apikey), to get your keys.
+Open [Google AI Gemini](https://aistudio.google.com/app/apikey), and then get your keys.
 
 ### 1.2 Install the Gemini plugin
 
@@ -25,7 +25,7 @@ export GEMINI_API_KEY=your_google_gemini_key
 
 Added [gcm file content](/added_into_zshrc.sh) into your shell configuration file:
 
-Copy [gcm](/added_into_zshrc.sh), and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
+Copy [gcm](/added_into_zshrc.sh)'s content, and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
 
 ### 2.2 Use `gcm` to generate git commit message
 
