@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #
-# AI-powered Git Commit Function
+# Funtion: Auto generate git commit message by Google Gemini AI.
 #
 # Copy paste this shell into your ~/.bashrc or ~/.zshrc to gain the `gcm` command. It:
 # 1) gets the current staged changed diff
@@ -34,7 +34,7 @@ You need to generate a git commit message based on the following rules:
 3. the commit message should  based on the diff content is following:
 \n
 \`\`\`
-`git diff --cached --staged`
+$(git diff --cached --staged)
 \`\`\`
 "
     }
@@ -51,12 +51,12 @@ You need to generate a git commit message based on the following rules:
 
     # Main script
     echo "Generating AI-powered commit message using gemini..."
-    echo -e "\nAI Commit message is Base on the diff contents:\n\n`git diff --cached --staged`\n\n"
+    echo -e "\nAI Commit message is Base on the diff contents:\n\n$(git diff --cached --staged)\n\n"
     commit_message=$(generate_commit_message)
 
     while true; do
         echo -e "\nProposed commit message:\n"
-        echo "$commit_message"
+        echo -e "$commit_message\n"
 
         read_input "Do you want to (a)ccept, (e)dit, (r)egenerate, or (c)ancel? "
         choice=$REPLY
@@ -84,7 +84,7 @@ You need to generate a git commit message based on the following rules:
                 ;;
             r|R )
                 echo "Regenerating commit message using gemini..."
-                echo -e "\nThe commit message is Base on the diff contents:\n\n`git diff --cached --staged`\n\n"
+                echo -e "\nThe commit message is Base on the diff contents:\n\n$(git diff --cached --staged)\n\n"
                 commit_message=$(generate_commit_message)
                 ;;
             c|C )

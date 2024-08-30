@@ -23,13 +23,13 @@ export GEMINI_API_KEY=your_google_gemini_key
 
 ### 2.1 Set `gcm` code into your shell configuration.
 
-Added [gcm file content](/added_into_zshrc.sh) into your shell configuration file:
+Added `gcm` command of this file [added_into_zshrc.sh](/added_into_zshrc.sh) into your shell configuration file:
 
-Copy [gcm](/added_into_zshrc.sh)'s content, and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
+Copy content of the file [added_into_zshrc.sh](/added_into_zshrc.sh)'s content, and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
 
 **NOTICE**:
 
-If you want to generate a Chinese commit massage, Please use Chinese version file of [add_into_zshrc_ch.sh](/added_into_zshr_ch.sh).
+If you want to generate a Chinese commit massage, Please use Chinese version file of [added_into_zshrc_ch.sh](/added_into_zshrc_ch.sh).
 
 ### 2.2 Use `gcm` to generate git commit message
 

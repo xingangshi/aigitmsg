@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 #
-# AI-powered Git Commit Function
+# Funtion: Auto generate git commit message by Google Gemini AI.
 #
 # Copy paste this shell into your ~/.bashrc or ~/.zshrc to gain the `gcm` command. It:
 # 1) gets the current staged changed diff
@@ -10,14 +10,15 @@
 # But - just read and edit the code however you like
 #
 # the `llm` CLI util is awesome, can get it here: https://llm.datasette.io/en/stable/
+#
 
 
-# Unalias gcm if it exists (to prevent conflicts)
+# 取消已经有 gcm 这个命令命名的命令，假如有的话，避免和之前的冲突
 unalias gcm 2>/dev/null
 
-# Define the AI-powered gcm function using gemini
+# 使用 Google Gemini 生成 Git 提交信息的 gcm 函数
 gcm() {
-    # Function to generate commit message using the gemini model
+    # 使用 Google Gemini 模型生成 Git 提交信息的 gcm 函数
     generate_commit_message() {
         llm -m gemini-1.5-flash-latest "
 您需要根据以下规则生成 git 提交的信息：
@@ -30,11 +31,10 @@ gcm() {
 - 重构：重构 generate_commit_message 函数
 - 持续集成：为 Python 包发布添加 GitHub Actions 工作流程
 - 编译构建：更新 setup.py 并添加 tests 文件夹
-2. 请将自动生成的 git 提交信息重构优化成一行信息进行显示
+2. 请将自动生成的 git 提交信息重构优化成一行信息通过中文进行显示
 3. 自动生成提交消息应基于以下差异的内容进行：
-n
 \`\`\`
-`git diff --cached --staged`
+$(git diff --cached --staged)
 \`\`\`
 "
     }
@@ -51,12 +51,12 @@ n
 
     # Main script
     echo "使用 Google Gemini AI 自动生成 Git 的提交消息......"
-    echo -e "\nAI 生成的内容是基于以下的差异化信息：\n\n`git diff --cached --staged`\n\n"
+    echo -e "\nAI 生成的内容是基于以下的差异化信息：\n\n$(git diff --cached --staged)\n\n"
     commit_message=$(generate_commit_message)
 
     while true; do
         echo -e "\n推荐的提交信息如下：\n"
-        echo "$commit_message"
+        echo -e "$commit_message\n"
 
         read_input "你想要 (a)ccept/使用这个提交信息, (e)dit/自己手写, (r)egenerate/重新生成, or (c)ancel/退出? "
         choice=$REPLY
@@ -84,7 +84,7 @@ n
                 ;;
             r|R )
                 echo "再次使用 Google Gemini AI 自动生成 Git 的提交消息......"
-                echo -e "\nAI 生成的内容是基于以下的差异化信息：\n\n`git diff --cached --staged`\n\n"
+                echo -e "\n\tAI 生成的内容是基于以下的差异化信息：\n\n$(git diff --cached --staged)\n\n"
                 commit_message=$(generate_commit_message)
                 ;;
             c|C )
