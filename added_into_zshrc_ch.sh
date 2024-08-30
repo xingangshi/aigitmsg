@@ -1,15 +1,15 @@
 # -----------------------------------------------------------------------------
 #
-# Funtion: Auto generate git commit message by Google Gemini AI.
+# 功能：通过 Google Gemini AI 自动生成 git 提交信息。
 #
-# Copy paste this shell into your ~/.bashrc or ~/.zshrc to gain the `gcm` command. It:
-# 1) gets the current staged changed diff
-# 2) sends them to an LLM to write the git commit message
-# 3) allows you to easily accept, edit, regenerate, cancel
+# 将此 shell 复制粘贴到你的 ~/.bashrc 或 ~/.zshrc 中以获得 `gcm` 命令。它：
+# 1) 获取当前暂存的更改差异
+# 2) 将它们发送到 LLM 以编写 git 提交信息
+# 3) 允许你轻松接受、编辑、重新生成、取消
 #
-# But - just read and edit the code however you like
+# 但是 - 只需根据你的喜好阅读和编辑代码
 #
-# the `llm` CLI util is awesome, can get it here: https://llm.datasette.io/en/stable/
+# `llm` CLI 工具非常棒，可以在这里获取： https://llm.datasette.io/en/stable/
 #
 
 
@@ -20,7 +20,7 @@ unalias gcm 2>/dev/null
 gcm() {
     # 使用 Google Gemini 模型生成 Git 提交信息的 gcm 函数
     generate_commit_message() {
-        llm -m gemini-1.5-flash-latest "
+        llm -m gemini-1.5-flash-latest <<EOF
 您需要根据以下规则生成 git 提交的信息：
 1. 好的 git 提交信息示例
 - 功能：向 generate_commit_message 函数添加类型注释
@@ -37,27 +37,27 @@ gcm() {
 \`\`\`
 $(git diff --cached --staged)
 \`\`\`
-"
+EOF
     }
 
-    # Function to read user input compatibly with both Bash and Zsh
+    # 兼容 Bash 和 Zsh 的用户输入读取函数
     read_input() {
         if [ -n "$ZSH_VERSION" ]; then
-            echo -n "$1"
+            printf '%s' "$1"
             read -r REPLY
         else
             read -p "$1" -r REPLY
         fi
     }
 
-    # Main script
-    echo "使用 Google Gemini AI 自动生成 Git 的提交消息......"
-    echo -e "\nAI 生成的内容是基于以下的差异化信息：\n\n$(git diff --cached --staged)\n\n"
+    # 主脚本
+    printf '使用 Google Gemini AI 自动生成 Git 的提交消息......'
+    printf '\nAI 生成的内容是基于以下的差异化信息：\n\n %s\n\n' "$(git diff --cached --staged)"
     commit_message=$(generate_commit_message)
 
     while true; do
-        echo -e "\n推荐的提交信息如下：\n"
-        echo -e "$commit_message\n"
+        printf "\n推荐的提交信息如下：\n"
+        printf '%s\n' "$commit_message"
 
         read_input "你想要 (a)ccept/使用这个提交信息, (e)dit/自己手写, (r)egenerate/重新生成, or (c)ancel/退出? "
         choice=$REPLY
@@ -65,10 +65,10 @@ $(git diff --cached --staged)
         case "$choice" in
             a|A )
                 if git commit -m "$commit_message"; then
-                    echo "Commit 成功，已提交 AI 自动生成信息。"
+                    printf "Commit 成功，已提交 AI 自动生成信息。\n"
                     return 0
                 else
-                    echo "Commit 失败，请检查你的修改并再次尝试。"
+                    printf "Commit 失败，请检查你的修改并再次尝试。\n"
                     return 1
                 fi
                 ;;
@@ -76,25 +76,24 @@ $(git diff --cached --staged)
                 read_input "输入你的提交信息："
                 commit_message=$REPLY
                 if [ -n "$commit_message" ] && git commit -m "$commit_message"; then
-                    echo "Commit 成功，已提交您自己手写的信息。"
+                    printf "Commit 成功，已提交您自己手写的信息。\n"
                     return 0
                 else
-                    echo "Commit 失败，请检查你的修改并再次尝试。"
+                    printf "Commit 失败，请检查你的修改并再次尝试。\n"
                     return 1
                 fi
                 ;;
             r|R )
-                echo "再次使用 Google Gemini AI 自动生成 Git 的提交消息......"
-                echo -e "\n\tAI 生成的内容是基于以下的差异化信息：\n\n$(git diff --cached --staged)\n\n"
+                printf "再次使用 Google Gemini AI 自动生成 Git 的提交消息......\n"
+                printf  '\n\tAI 生成的内容是基于以下的差异化信息：\n\n%s\n\n' "$(git diff --cached --staged)"
                 commit_message=$(generate_commit_message)
                 ;;
             c|C )
-                echo "取消提交，退出。"
+                printf "取消提交，退出。\n"
                 return 1
                 ;;
             * )
-                echo "错误的选项. 请重新输入:w
-                "
+                printf "错误的选项. 请重新输入。\n"
                 ;;
         esac
     done

@@ -1,39 +1,40 @@
-# AI Generate Git message
-Auto generate git commit message by Google Gemini AI.
+# AI Generate Git Message
+
+Automatically generate git commit messages using Google Gemini AI.
 
 ## 1. Base Installer
 
-### 1.1 Generate your Gemini key
+### 1.1 Generate Your Gemini Key
 
-Open [Google AI Gemini](https://aistudio.google.com/app/apikey), and then get your keys.
+Visit [Google AI Gemini](https://aistudio.google.com/app/apikey) to obtain your API key.
 
-### 1.2 Install the Gemini plugin
+### 1.2 Install the Gemini Plugin
 
-```
+```bash
+pip install llm
 llm install llm-gemini
 ```
 
-### 1.2 Set up your Google Gemini key
+### 1.3 Set Up Your Google Gemini Key
 
-```
+```bash
 export GEMINI_API_KEY=your_google_gemini_key
 ```
 
-## 2. Add Self `gcm` command
+## 2. Add Self `gcm` Command
 
-### 2.1 Set `gcm` code into your shell configuration.
+### 2.1 Configure `gcm` in Your Shell
 
-Added `gcm` command of this file [added_into_zshrc.sh](/added_into_zshrc.sh) into your shell configuration file:
+Add the `gcm` command from [added_into_zshrc.sh](/added_into_zshrc.sh) to your shell configuration file:
 
-Copy content of the file [added_into_zshrc.sh](/added_into_zshrc.sh)'s content, and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
+Copy the contents of [added_into_zshrc.sh](/added_into_zshrc.sh) and paste it into your `~/.bashrc` or `~/.zshrc` to enable the `gcm` command.
 
 **NOTICE**:
 
-If you want to generate a Chinese commit massage, Please use Chinese version file of [added_into_zshrc_ch.sh](/added_into_zshrc_ch.sh).
+To generate commit messages in Chinese, use the Chinese version of [added_into_zshrc_ch.sh](/added_into_zshrc_ch.sh).
 
-### 2.2 Use `gcm` to generate git commit message
+### 2.2 Use `gcm` to Generate Git Commit Messages
 
-1. Change directory into your git repo.
-2. Make Some changes on your repo.
-3. use `gcm` command to auto generate commit message.
-
+1. Navigate to your git repository.
+2. Make some changes in your repository.
+3. Use the `gcm` command to automatically generate a commit message.

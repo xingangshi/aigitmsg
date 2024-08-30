@@ -10,7 +10,7 @@
 # But - just read and edit the code however you like
 #
 # the `llm` CLI util is awesome, can get it here: https://llm.datasette.io/en/stable/
-
+#
 
 # Unalias gcm if it exists (to prevent conflicts)
 unalias gcm 2>/dev/null
@@ -19,7 +19,7 @@ unalias gcm 2>/dev/null
 gcm() {
     # Function to generate commit message using the gemini model
     generate_commit_message() {
-        llm -m gemini-1.5-flash-latest "
+        llm -m gemini-1.5-flash-latest <<EOF
 You need to generate a git commit message based on the following rules:
 1. Good git messages examples
 - feat: Add type annotation to generate_commit_message function
@@ -30,19 +30,18 @@ You need to generate a git commit message based on the following rules:
 - refactor: Refactor generate_commit_message function
 - ci: Add GitHub Actions workflow for Python package release
 - build: Update setup.py and add tests folder
-2. Please make the generate commit message into oneline.
-3. the commit message should  based on the diff content is following:
-\n
+2. Please make the generate commit message into one line.
+3. the commit message should based on the diff content is following:
 \`\`\`
 $(git diff --cached --staged)
 \`\`\`
-"
+EOF
     }
 
     # Function to read user input compatibly with both Bash and Zsh
     read_input() {
         if [ -n "$ZSH_VERSION" ]; then
-            echo -n "$1"
+            printf "%s" "$1"
             read -r REPLY
         else
             read -p "$1" -r REPLY
@@ -50,13 +49,12 @@ $(git diff --cached --staged)
     }
 
     # Main script
-    echo "Generating AI-powered commit message using gemini..."
-    echo -e "\nAI Commit message is Base on the diff contents:\n\n$(git diff --cached --staged)\n\n"
+    printf "Generating AI-powered commit message using gemini...\n"
+    printf "\nAI Commit message is based on the diff contents:\n\n%s\n\n" "$(git diff --cached --staged)"
     commit_message=$(generate_commit_message)
 
     while true; do
-        echo -e "\nProposed commit message:\n"
-        echo -e "$commit_message\n"
+        printf "\nProposed commit message:\n\n%s\n" "$commit_message"
 
         read_input "Do you want to (a)ccept, (e)dit, (r)egenerate, or (c)ancel? "
         choice=$REPLY
@@ -64,10 +62,10 @@ $(git diff --cached --staged)
         case "$choice" in
             a|A )
                 if git commit -m "$commit_message"; then
-                    echo "Changes committed successfully!"
+                    printf "Changes committed successfully!\n"
                     return 0
                 else
-                    echo "Commit failed. Please check your changes and try again."
+                    printf "Commit failed. Please check your changes and try again.\n"
                     return 1
                 fi
                 ;;
@@ -75,24 +73,24 @@ $(git diff --cached --staged)
                 read_input "Enter your commit message: "
                 commit_message=$REPLY
                 if [ -n "$commit_message" ] && git commit -m "$commit_message"; then
-                    echo "Changes committed successfully with your message!"
+                    printf "Changes committed successfully with your message!\n"
                     return 0
                 else
-                    echo "Commit failed. Please check your message and try again."
+                    printf "Commit failed. Please check your message and try again.\n"
                     return 1
                 fi
                 ;;
             r|R )
-                echo "Regenerating commit message using gemini..."
-                echo -e "\nThe commit message is Base on the diff contents:\n\n$(git diff --cached --staged)\n\n"
+                printf "Regenerating commit message using gemini...\n"
+                printf "\nThe commit message is based on the diff contents:\n\n%s\n\n" "$(git diff --cached --staged)"
                 commit_message=$(generate_commit_message)
                 ;;
             c|C )
-                echo "Commit cancelled."
+                printf "Commit cancelled.\n"
                 return 1
                 ;;
             * )
-                echo "Invalid choice. Please try again."
+                printf "Invalid choice. Please try again.\n"
                 ;;
         esac
     done
