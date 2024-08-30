@@ -27,8 +27,13 @@ Added [gcm file content](/added_into_zshrc.sh) into your shell configuration fil
 
 Copy [gcm](/added_into_zshrc.sh)'s content, and paste this shell into your `~/.bashrc` or `~/.zshrc` to gain the `gcm` command.
 
+**NOTICE**:
+
+If you want to generate a Chinese commit massage, Please use Chinese version file of [add_into_zshrc_ch.sh](/added_into_zshr_ch.sh).
+
 ### 2.2 Use `gcm` to generate git commit message
 
 1. Change directory into your git repo.
 2. Make Some changes on your repo.
 3. use `gcm` command to auto generate commit message.
+
