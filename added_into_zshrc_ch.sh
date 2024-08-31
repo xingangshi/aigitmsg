@@ -22,7 +22,7 @@ gcm() {
     generate_commit_message() {
         llm -m gemini-1.5-flash-latest <<EOF
 您需要根据以下规则生成 git 提交的信息：
-1. 好的 git 提交信息示例
+1. 好的 git 提交信息示例：
 - 功能：向 generate_commit_message 函数添加类型注释
 - 修复：修复 generate_commit_message 功能中的 bug
 - 文档： 更新 README.md
@@ -31,8 +31,8 @@ gcm() {
 - 重构：重构 generate_commit_message 函数
 - 持续集成：为 Python 包发布添加 GitHub Actions 工作流程
 - 编译构建：更新 setup.py 并添加 tests 文件夹
-2. 将自动生成的信息结果，翻译成中文
-3. 请将自动生成的 git 提交信息重构优化成一行信息进行显示
+2. 请将自动生成的 git 提交信息重构优化成一行信息进行显示
+3. 将自动生成的信息结果，翻译成中文，并且只显示中文翻译就可以
 4. 自动生成提交消息应基于以下差异的内容进行：
 \`\`\`
 $(git diff --cached --staged)
