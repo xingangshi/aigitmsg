@@ -21,14 +21,14 @@ gcm() {
     # 使用 Google Gemini 模型生成 Git 提交信息的 gcm 函数
     generate_commit_message() {
         llm -m gemini-1.5-flash-latest <<EOF
-您需要根据以下规则生成 git 提交的信息：
-1. 好的 git 提交信息示例：
+您需要根据以下所有的规则去生成 git 提交的信息：
+1. 以下是一些好的、高效的、易于理解的 git 提交信息的示例：
 - 功能：向 generate_commit_message 函数添加类型注释
 - 修复：修复 generate_commit_message 功能中的 bug
 - 文档： 更新 README.md
-- 初始化： 第一次提交
-- 格式化： 使用黑色格式化代码
-- 重构：重构 generate_commit_message 函数
+- 初始化： 第一次提交文件、初始化一个新的文件
+- 格式化： 使用黑色格式化代码，格式化 xxx 这个文件
+- 重构：重构 generate_commit_message 函数，重构 xxx 文件
 - 持续集成：为 Python 包发布添加 GitHub Actions 工作流程
 - 编译构建：更新 setup.py 并添加 tests 文件夹
 2. 请将自动生成的 git 提交信息重构优化成一行信息进行显示

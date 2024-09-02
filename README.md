@@ -43,3 +43,10 @@ To enable the `gcm` command, copy the contents of [added_into_zshrc.sh](/added_i
 ## 3. Additional Information
 
 For more details on usage and options, refer to the documentation in the repository.
+
+## 4. Version history
+
+1. Optimized the prompt for better clarity and effectiveness.
+2. Improved installation instructions for user convenience.
+3. Added support for generating commit messages in multiple languages.
+4. Enhanced error handling for API key configuration.
